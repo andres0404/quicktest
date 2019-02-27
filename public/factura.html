@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        
+        <title>Facturas!</title>
+
+    </head>
+    <body>
+        <div class="container">
+            <h1>Facturas</h1>
+            <h2>Agregar Factura</h2>
+            <form id="form_cli">
+                <input type="hidden" value='' name="cli_id" id="cli_id" />
+                <div class="form-group row">
+                    <label for="cli_nombre" class="col-sm-2 col-form-label">cli_nombre</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="cli_nombre" placeholder="cli_nombre">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="cli_email" class="col-sm-2 col-form-label">cli_email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="cli_email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="cli_documento" class="col-sm-2 col-form-label">cli_documento</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="cli_documento" placeholder="cli_documento">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="cli_estado" class="col-sm-2 col-form-label">cli_estado</label>
+                    <div class="col-sm-10">
+                        <select class="custom-select mr-sm-2" id="cli_estado">
+                            <option selected>Elija...</option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+            <h2>Listado de Facturas</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">prod_id</th>
+                        <th scope="col">prod_nombre</th>
+                        <th scope="col">prod_precio</th>
+                        <th scope="col">prod_marca</th>
+                        <th scope="col">prod_referencia</th>
+                        <th scope="col">prod_estado</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo">
+                    
+                </tbody>
+            </table>
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="http://localhost/quicktest/vendor/jquery/jquery-3.3.1.js" ></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+             $.ajax({
+                method: "GET",
+                url: "../controller/api/facturas"
+                // data: {function: 'customer'}
+            }).done(function (response){
+                var jsonR = jQuery.parseJSON(response);
+                    //console.log("CUSTOMER: ",response.data);
+                    jsonR.data.forEach(element => {
+                        var tr = $("<tr>");
+                        console.log(element);
+                        for(const prop in element){
+                            var td = $("<td>");
+                            td.append(element[prop]);
+                            console.log(prop + " " + element[prop]);
+                            tr.append(td);
+                        }
+                        $("#cuerpo").append(tr);
+                    });
+                
+            });
+                
+            /*$.get("../controller/api/clientes", function (data) {
+                data.forEach(element => {
+                    alert(element);
+                });
+                
+            });*/
+        </script>
+
+        </body>
+</html>
